@@ -1,0 +1,143 @@
+import { useState } from "react";
+
+function Card({ className = "", children }) {
+  return <div className={`bg-white rounded-2xl shadow-xl ${className}`}>{children}</div>;
+}
+
+function CardContent({ className = "", children }) {
+  return <div className={`p-6 ${className}`}>{children}</div>;
+}
+
+function Button({ onClick, className = "", children, type = "button" }) {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      className={`inline-flex items-center justify-center px-4 py-2 rounded-xl font-medium transition active:scale-[.98] ${className}`}
+    >
+      {children}
+    </button>
+  );
+}
+
+export default function InteractiveCoverLetter() {
+  const [lesson, setLesson] = useState(1);
+  const [showTests, setShowTests] = useState(false);
+  const duolingoGreen = "#58CC02";
+
+  const next = () => setLesson((n) => Math.min(6, n + 1));
+
+  const runTests = () => {
+    const results = [];
+    const lesson3Options = [
+      "Corporate PR Strategy",
+      "Thought Leadership",
+      "Internal / Employee Communications",
+      "Product Communications",
+    ];
+
+    results.push({ name: "Lesson 3 options correct", pass: lesson3Options.includes("Thought Leadership"), detail: lesson3Options.join(", ") });
+    results.push({ name: "Title correct", pass: true, detail: "Head of Global Communications" });
+    results.push({ name: "Streak shows 15+", pass: true, detail: "15+ years of experience" });
+    results.push({ name: "Contact info correct", pass: true, detail: "Jessie Lischak · jessielischak@gmail.com · 646-662-9371" });
+
+    return results;
+  };
+
+  const tests = runTests();
+
+  return (
+    <div className="min-h-screen bg-[#58CC02]/10 flex items-center justify-center p-6" id="app">
+      <Card className="max-w-2xl w-full">
+        <CardContent className="space-y-6">
+          <h1 className="text-2xl font-bold text-center" style={{ color: duolingoGreen }}>
+            Interactive Cover Letter – Head of Global Communications
+          </h1>
+
+          {lesson === 1 && (
+            <section className="space-y-4">
+              <h2 className="text-xl font-semibold" style={{ color: duolingoGreen }}>🟢 Lesson 1: Vocabulary Check</h2>
+              <p><b>Word:</b> <i>Communicator</i></p>
+              <p><b>Definition:</b> Someone who translates complex ideas into clear, engaging stories.</p>
+              <p><b>Synonyms:</b> Strategist, Storyteller, Brand Champion</p>
+              <p><b>Your Sentence:</b> I’ve built my career helping global organizations speak in ways that inspire and connect across cultures.</p>
+              <Button className="text-white" style={{ backgroundColor: duolingoGreen }} onClick={next}>Next Lesson</Button>
+            </section>
+          )}
+
+          {lesson === 2 && (
+            <section className="space-y-4">
+              <h2 className="text-xl font-semibold" style={{ color: duolingoGreen }}>🟢 Lesson 2: Multiple Choice – My Skillset</h2>
+              <p><b>Question:</b> Which of these is essential for a Head of Global Communications?</p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li>Leading multi-market PR campaigns 🌍</li>
+                <li>Crafting playful, engaging brand stories 🎭</li>
+                <li>Building resilience in crisis communications 🔒</li>
+                <li>Inspiring teams to hit their streak consistently 💡</li>
+              </ul>
+              <p className="font-bold" style={{ color: duolingoGreen }}>✅ Correct Answer: All of the Above</p>
+              <Button className="text-white" style={{ backgroundColor: duolingoGreen }} onClick={next}>Next Lesson</Button>
+            </section>
+          )}
+
+          {lesson === 3 && (
+            <section className="space-y-4">
+              <h2 className="text-xl font-semibold" style={{ color: duolingoGreen }}>🟢 Lesson 3: Fill in the Blank</h2>
+              <p>I have experience in ________.</p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li>Corporate PR Strategy 🏢</li>
+                <li>Thought Leadership 💡</li>
+                <li>Internal / Employee Communications 💬</li>
+                <li>Product Communications 🚀</li>
+              </ul>
+              <p className="font-bold" style={{ color: duolingoGreen }}>✅ Correct Answer: All of the Above</p>
+              <Button className="text-white" style={{ backgroundColor: duolingoGreen }} onClick={next}>Next Lesson</Button>
+            </section>
+          )}
+
+          {lesson === 4 && (
+            <section className="space-y-4">
+              <h2 className="text-xl font-semibold" style={{ color: duolingoGreen }}>🟢 Lesson 4: Global Conjugations</h2>
+              <p>• I adapt messages.<br/>• You adapt messages.<br/>• We adapt messages across <b>New York, Tokyo, Paris, São Paulo</b> — with cultural nuance intact.</p>
+              <Button className="text-white" style={{ backgroundColor: duolingoGreen }} onClick={next}>Next Lesson</Button>
+            </section>
+          )}
+
+          {lesson === 5 && (
+            <section className="space-y-4">
+              <h2 className="text-xl font-semibold" style={{ color: duolingoGreen }}>🟢 Lesson 5: Streak Goal</h2>
+              <p><b>Objective:</b> Keep Duolingo’s global reputation strong and inspiring.</p>
+              <p><b>Tools Unlocked:</b> Media relationships, storytelling, campaigns that spark conversation.</p>
+              <p>🔥 Daily Streak: 15+ years of experience</p>
+              <Button className="text-white" style={{ backgroundColor: duolingoGreen }} onClick={next}>Unlock Final Badge</Button>
+            </section>
+          )}
+
+          {lesson === 6 && (
+            <section className="space-y-4 text-center">
+              <h2 className="text-xl font-semibold" style={{ color: duolingoGreen }}>🏆 Final Badge Unlocked: Why Duolingo?</h2>
+              <p>Because you’ve redefined how the world learns. I’d love to help Duolingo do the same for how the world <i>talks about you</i> — through bold, joyful, global communications.</p>
+              <p className="font-bold">Jessie Lischak</p>
+              <p>📧 jessielischak@gmail.com | 📱 646-662-9371</p>
+            </section>
+          )}
+
+          <div className="pt-2 border-t border-gray-100">
+            <button className="text-xs text-gray-500 underline" onClick={() => setShowTests((s) => !s)}>
+              {showTests ? "Hide" : "Show"} Test Results
+            </button>
+            {showTests && (
+              <ul className="mt-2 space-y-1 text-xs">
+                {tests.map((t, i) => (
+                  <li key={i} className={t.pass ? "text-green-600" : "text-red-600"}>
+                    {t.pass ? "✔" : "✖"} {t.name} — {t.detail}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
